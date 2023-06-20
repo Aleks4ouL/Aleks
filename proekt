@@ -1,0 +1,71 @@
+{
+            Console.WriteLine("Въведи харесвания за 5 дни");
+            List<int> like = Console.ReadLine().Split().Select(int.Parse).ToList();
+            Sort(like);
+            Console.WriteLine(string.Join(" ", like));
+            like.ForEach(x => Console.WriteLine(x));
+            int index = Find(like, 120);
+            if (index == -1)
+                Console.WriteLine("Няма съвпадение");
+            else Console.WriteLine("Има 120 харесвания");
+   
+
+            int biggerNumber = like.Max();
+            Console.WriteLine("Най-голямото число е: " + biggerNumber);
+            int smallestNumber = like.Min();
+            Console.WriteLine("Най-малкото число е: " + smallestNumber);
+
+
+            for (int i = 1; i < 100; i++)
+            {
+                if (like[i] < 100)
+                {
+                    Console.WriteLine("Броя на харесванията е под 100: " + like[i]);
+                }
+            }
+            
+            
+            Stack<int> stack = new Stack<int>();
+            for (int i = 0; i < like.Count; i++)
+            {
+                if (like[i] % 2 == 0)
+                {
+                    stack.Push(like[i]);
+                }
+            }
+            Console.WriteLine("Четни числа"+stack);
+
+        }
+
+
+        static void Sort(List<int> like)
+        {
+                  for (int i = 0; i < like.Count - 1; i++)
+                   for (int j = 0; j < like.Count - 1; j++)
+                    if (like[j] > like[j + 1])
+                    {
+                        int swap = like[j];
+                        like[j] = like[j + 1];
+                        like[j + 1] = swap;
+                    }
+        }
+        
+        static int Find(List<int> like, int x)
+        {
+            int l = 0;
+            int r = like.Count-1;
+            int m;
+            do
+            {
+                m = (l + r) / 2;
+                if (like[m] < x)
+                    l = m + 1;
+                else r = m - 1;
+            } while (like[m] != x && r >= l);
+            if (like[m] == x)
+            {
+                return m;
+            }
+            else
+                return -1;
+        }
